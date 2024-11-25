@@ -41,5 +41,5 @@ Route::prefix('/user/')->group(function(){
     Route::post('update/{id}',[UserController::class,'update']);
     Route::delete('delete/{id}',[UserController::class,'delete']);
     Route::get('show/{id}',[UserController::class,'show']);
-  
+
 });

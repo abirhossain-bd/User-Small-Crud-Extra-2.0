@@ -13,6 +13,7 @@
 
 
         <a href="{{ url('user/create') }}" style="display-inline:block" class="btn btn-success">Create User</a>
+        <a href="#" style="display-inline:block" class="btn btn-secondary call_ajax">Get Products</a>
         <a style="float: right" href="{{ url('logout') }}" class="btn btn-danger"><i class="fa-solid fa-right-from-bracket"></i></a>
 
         <div style="float: right ; margin-right:20px" >
@@ -71,6 +72,7 @@
 
                             <td>
                                 <a href="{{ url('user/show/'.$user->id) }}">View</a>
+
                             </td>
                         </tr>
                     @endforeach
@@ -79,6 +81,58 @@
             {{ $users->appends(['search' => $search])->links('pagination::bootstrap-5') }}
 
         </div>
+        <div class="row">
+            <div class="card">
+
+                <table class="table table-striped">
+                    <thead>
+                        <tr>
+                            <th>Title</th>
+                            <th>Description</th>
+                            <th>Brand</th>
+                            <th>Category</th>
+                            <th>Price</th>
+                            <th>Thumbnail</th>
+                        </tr>
+                    </thead>
+                    <tbody id="products_body">
+
+                    </tbody>
+                </table>
+            </div>
+        </div>
     </div>
+
+    <script src="https://code.jquery.com/jquery-3.7.1.min.js"></script>
+
+    <script>
+        $(document).on('click','.call_ajax', function(){
+
+            $.ajax({
+                url: "https://dummyjson.com/products",
+                type: "GET",
+                success: function(response){
+                    console.log(response.products[1]);
+                    var products = response.products;
+                    for (let i = 0; i < products.length; i++) {
+                        var html = '<tr>' +
+                                        '<td>' + products[i].title + '</td>' +
+                                        '<td>' + products[i].description + '</td>' +
+                                        '<td>' + products[i].brand + '</td>' +
+                                        '<td>' + products[i].category + '</td>' +
+                                        '<td>' + products[i].price + '</td>' +
+                                        '<td><img src="' + products[i].thumbnail + '" height="100" width="100"></td>' +
+                                    '</tr>'
+                        $('#products_body').append(html);
+                    }
+
+                },
+                error: function(error){
+                    console.log(error);
+
+                }
+            })
+        })
+    </script>
 </body>
 </html>
