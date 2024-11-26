@@ -110,7 +110,7 @@ class UserController extends Controller
         if ($request->hasFile('image')) {
 
 
-            if (fileExists($user->image) && $user->image != null) {
+            if (file_exists($user->image) && $user->image != null) {
                 unlink($user->image);
             }
 
